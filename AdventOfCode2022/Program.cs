@@ -27,7 +27,7 @@ namespace AdventOfCode2022
                 }
             }
 
-            Console.WriteLine(calories.Max());
+            Console.WriteLine(calories.OrderByDescending(x => x).Take(3).Sum());
         }
     }
 }
