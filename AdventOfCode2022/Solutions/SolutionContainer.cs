@@ -31,8 +31,8 @@ namespace AdventOfCode2022.Solutions
         {
             return part switch
             {
-                DayPart.Part1 => Days.GetValueOrDefault(dayNumber).SolvePart1(Inputs.GetDayInput(dayNumber)),
-                DayPart.Part2 => Days.GetValueOrDefault(dayNumber).SolvePart2(Inputs.GetDayInput(dayNumber)),
+                DayPart.Part1 => Days.GetValueOrDefault(dayNumber).SolvePart1(InputHelper.GetDayInput(dayNumber)),
+                DayPart.Part2 => Days.GetValueOrDefault(dayNumber).SolvePart2(InputHelper.GetDayInput(dayNumber)),
                 _ => throw new NotImplementedException(),
             };
         }

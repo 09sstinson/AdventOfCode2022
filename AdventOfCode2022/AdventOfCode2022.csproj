@@ -10,9 +10,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Inputs\Day1\input.txt">
+	<Content Include="Inputs\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+	</Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Inputs\InputHelper.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
