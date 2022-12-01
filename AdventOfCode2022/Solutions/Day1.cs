@@ -5,16 +5,16 @@ using System.Text;
 
 namespace AdventOfCode2022.Solutions
 {
-    class Day1 : Day<IEnumerable<string>>
+    class Day1 : IDay<IEnumerable<string>>
     {
-        public override string SolvePart1(IEnumerable<string> input)
+        public string SolvePart1(IEnumerable<string> input)
         {
             var calories = GetCalories(input);
 
             return calories.Max().ToString();
         }
 
-        public override string SolvePart2(IEnumerable<string> input)
+        public string SolvePart2(IEnumerable<string> input)
         {
             var calories = GetCalories(input);
 
