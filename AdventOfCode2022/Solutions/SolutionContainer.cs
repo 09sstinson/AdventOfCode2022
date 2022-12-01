@@ -10,14 +10,19 @@ namespace AdventOfCode2022.Solutions
 
         public SolutionContainer()
         {
-            for(var dayNumber = 1; dayNumber <= 25; dayNumber++)
+            InitializeDays();
+        }
+
+        private void InitializeDays()
+        {
+            for (var dayNumber = 1; dayNumber <= 25; dayNumber++)
             {
                 var type = Type.GetType($"AdventOfCode2022.Solutions.Day{dayNumber}");
 
                 if (type != null)
                 {
                     var day = (IDay)Activator.CreateInstance(type);
-                    Days.Add(1, day);
+                    Days.Add(dayNumber, day);
                 }
             }
         }
