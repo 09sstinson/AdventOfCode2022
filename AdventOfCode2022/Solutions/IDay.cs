@@ -4,9 +4,9 @@ using System.Text;
 
 namespace AdventOfCode2022.Solutions
 {
-    public interface IDay<TInput>
+    public interface IDay
     {
-        public string SolvePart1(TInput input);
-        public string SolvePart2(TInput input);
+        public string SolvePart1(IEnumerable<string> input);
+        public string SolvePart2(IEnumerable<string> input);
     }
 }

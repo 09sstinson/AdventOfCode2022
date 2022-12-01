@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AdventOfCode2022.Solutions
 {
-    class Day1 : IDay<IEnumerable<string>>
+    class Day1 : IDay
     {
         public string SolvePart1(IEnumerable<string> input)
         {
