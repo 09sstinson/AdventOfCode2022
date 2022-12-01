@@ -20,7 +20,7 @@ namespace AdventOfCode2022
                 {
                     calories.Add(tempCalories);
                     tempCalories = 0;
-                }
+                } 
                 else
                 {
                     tempCalories += int.Parse(input);
