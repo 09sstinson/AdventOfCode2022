@@ -10,7 +10,16 @@ namespace AdventOfCode2022.Solutions
 
         public SolutionContainer()
         {
-            Days.Add(1, new Day1());
+            for(var dayNumber = 1; dayNumber <= 25; dayNumber++)
+            {
+                var type = Type.GetType($"AdventOfCode2022.Solutions.Day{dayNumber}");
+
+                if (type != null)
+                {
+                    var day = (IDay)Activator.CreateInstance(type);
+                    Days.Add(1, day);
+                }
+            }
         }
 
         public string GetSolution(int dayNumber, DayPart part)
