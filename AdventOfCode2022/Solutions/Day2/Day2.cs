@@ -9,30 +9,26 @@ namespace AdventOfCode2022.Solutions
     {
         public string SolvePart1(IEnumerable<string> input)
         {
-            var games = input.Select(x => ParseGame(x));
+            var games = input.Select(x => ParseGame(x.ToCharArray()));
 
             return games.Select(x => x.GetPlayer2Score()).Sum().ToString();
         }
 
         public string SolvePart2(IEnumerable<string> input)
         {
-            var games = input.Select(x => ParseGameWithOutcomes(x));
+            var games = input.Select(x => ParseGameWithOutcomes(x.ToCharArray()));
 
             return games.Select(x => x.GetPlayer2Score()).Sum().ToString();
         }
 
-        public static RockPaperScissorsGame ParseGame(string input)
+        public static RockPaperScissorsGame ParseGame(char[] input)
         {
-            var moves = input.Split(" ").Select(x => ParseMove(x[0])).ToArray();
-            return new RockPaperScissorsGame(moves[0], moves[1]);
+            return new RockPaperScissorsGame(ParseMove(input[0]), ParseMove(input[2]));
         }
 
-        public static RockPaperScissorsGame ParseGameWithOutcomes(string input)
+        public static RockPaperScissorsGame ParseGameWithOutcomes(char[] input)
         {
-            var inputAsChars = input.ToCharArray();
-            var player1Move = inputAsChars[0];
-            var outcome = inputAsChars[2];
-            return new RockPaperScissorsGame(ParseMove(player1Move), ParseOutcome(outcome));
+            return new RockPaperScissorsGame(ParseMove(input[0]), ParseOutcome(input[2]));
         }
 
         public static Outcome ParseOutcome(char c)
@@ -50,9 +46,9 @@ namespace AdventOfCode2022.Solutions
         {
             return c switch
             {
-                var x when x == 'A' || x == 'X' => Move.Rock,
-                var x when x == 'B' || x == 'Y' => Move.Paper,
-                var x when x == 'C' || x == 'Z' => Move.Scissors,
+                'A' or 'X' => Move.Rock,
+                'B' or 'Y' => Move.Paper,
+                'C' or 'Z' => Move.Scissors,
                 _ => throw new NotImplementedException()
             };
         }
