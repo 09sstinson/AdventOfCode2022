@@ -8,6 +8,7 @@ namespace AdventOfCode2022.Solutions
     {
         public Move Player1Move { get; set; }
         public Move Player2Move { get; set; }
+
         private static readonly List<Move> _moveHeirarchy = new List<Move>() 
         { 
             Move.Rock,
@@ -34,21 +35,15 @@ namespace AdventOfCode2022.Solutions
                 return player1Move;
             }
             
-            var player1ShouldWin = desiredOutcome == Outcome.Player1Win;
-            return player1ShouldWin ? GetLosingMove(player1Move) : GetWinningMove(player1Move);
+            var player2ShouldWin = desiredOutcome == Outcome.Player2Win;
+            return GetResponse(player1Move, player2ShouldWin);
         }
 
-        public Move GetWinningMove(Move move)
+        public Move GetResponse(Move move, bool shouldWin)
         {
             var moveIndex = _moveHeirarchy.IndexOf(move);
-            var winningMoveIndex = (moveIndex + 1) % _moveHeirarchy.Count;
-            return _moveHeirarchy[winningMoveIndex];
-        }
-
-        public Move GetLosingMove(Move move)
-        {
-            var moveIndex = _moveHeirarchy.IndexOf(move);
-            var winningMoveIndex = (moveIndex + _moveHeirarchy.Count - 1) % _moveHeirarchy.Count;
+            var stepDirection = shouldWin ? 1 : -1;
+            var winningMoveIndex = (moveIndex + _moveHeirarchy.Count + stepDirection) % _moveHeirarchy.Count;
             return _moveHeirarchy[winningMoveIndex];
         }
 
@@ -64,7 +59,7 @@ namespace AdventOfCode2022.Solutions
                 return Outcome.Draw;
             }
 
-            return Player2Move == GetWinningMove(Player1Move) ? Outcome.Player2Win : Outcome.Player1Win;
+            return Player2Move == GetResponse(Player1Move, shouldWin: true) ? Outcome.Player2Win : Outcome.Player1Win;
         }
     }
 
