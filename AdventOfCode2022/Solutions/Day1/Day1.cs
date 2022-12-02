@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace AdventOfCode2022.Solutions
@@ -28,7 +29,7 @@ namespace AdventOfCode2022.Solutions
 
             foreach (var inputString in input)
             {
-                if (inputString == null || inputString.Trim() == string.Empty)
+                if (inputString is null || inputString.Trim() == string.Empty)
                 {
                     calories.Add(tempCalories);
                     tempCalories = 0;
