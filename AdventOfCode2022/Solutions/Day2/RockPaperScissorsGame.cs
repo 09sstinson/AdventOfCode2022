@@ -8,6 +8,12 @@ namespace AdventOfCode2022.Solutions
     {
         public Move Player1Move { get; set; }
         public Move Player2Move { get; set; }
+        private static readonly List<Move> _moveHeirarchy = new List<Move>() 
+        { 
+            Move.Rock,
+            Move.Paper,
+            Move.Scissors
+        };
 
         public RockPaperScissorsGame(Move player1Move, Move player2Move)
         {
@@ -28,18 +34,22 @@ namespace AdventOfCode2022.Solutions
                 return player1Move;
             }
             
-            // TODO do something cleverer here
             var player1ShouldWin = desiredOutcome == Outcome.Player1Win;
-            return player1Move switch
-            {
-                Move.Rock when player1ShouldWin => Move.Scissors,
-                Move.Rock when !player1ShouldWin => Move.Paper,
-                Move.Paper when player1ShouldWin => Move.Rock,
-                Move.Paper when !player1ShouldWin => Move.Scissors,
-                Move.Scissors when player1ShouldWin => Move.Paper,
-                Move.Scissors when !player1ShouldWin => Move.Rock,
-                _ => throw new NotImplementedException(),
-            };
+            return player1ShouldWin ? GetLosingMove(player1Move) : GetWinningMove(player1Move);
+        }
+
+        public Move GetWinningMove(Move move)
+        {
+            var moveIndex = _moveHeirarchy.IndexOf(move);
+            var winningMoveIndex = (moveIndex + 1) % _moveHeirarchy.Count;
+            return _moveHeirarchy[winningMoveIndex];
+        }
+
+        public Move GetLosingMove(Move move)
+        {
+            var moveIndex = _moveHeirarchy.IndexOf(move);
+            var winningMoveIndex = (moveIndex + _moveHeirarchy.Count - 1) % _moveHeirarchy.Count;
+            return _moveHeirarchy[winningMoveIndex];
         }
 
         public int GetPlayer2Score()
@@ -54,21 +64,7 @@ namespace AdventOfCode2022.Solutions
                 return Outcome.Draw;
             }
 
-            // TODO do something cleverer here
-            if (Player1Move == Move.Rock && Player2Move == Move.Scissors)
-            {
-                return Outcome.Player1Win;
-            }
-            if (Player1Move == Move.Paper && Player2Move == Move.Rock)
-            {
-                return Outcome.Player1Win;
-            }
-            if (Player1Move == Move.Scissors && Player2Move == Move.Paper)
-            {
-                return Outcome.Player1Win;
-            }
-
-            return Outcome.Player2Win;
+            return Player2Move == GetWinningMove(Player1Move) ? Outcome.Player2Win : Outcome.Player1Win;
         }
     }
 
