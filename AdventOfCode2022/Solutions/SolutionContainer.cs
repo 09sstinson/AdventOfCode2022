@@ -36,6 +36,15 @@ namespace AdventOfCode2022.Solutions
                 _ => throw new NotImplementedException(),
             };
         }
+
+        public void PrintAllSolutions()
+        {
+            foreach(var daySolution in Days)
+            {
+                var dayNumber = daySolution.Key;
+                Console.WriteLine($"Day {dayNumber} - Part 1: {GetSolution(dayNumber, DayPart.Part1)}, Part 2: {GetSolution(dayNumber, DayPart.Part2)}");
+            }
+        }
     }
 
     public enum DayPart
