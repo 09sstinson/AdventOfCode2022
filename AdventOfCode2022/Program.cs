@@ -10,7 +10,7 @@ namespace AdventOfCode2022
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(new SolutionContainer().GetSolution(1, DayPart.Part1));
+            Console.WriteLine(new SolutionContainer().GetSolution(2, DayPart.Part2));
         }
     }
 }
