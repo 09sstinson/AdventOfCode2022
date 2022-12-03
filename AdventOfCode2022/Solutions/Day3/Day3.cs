@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace AdventOfCode2022.Solutions
 {
@@ -28,14 +29,14 @@ namespace AdventOfCode2022.Solutions
         {
             var compartments = GetCompartments(input);
 
-            var sharedCharacter = FindSharedCharacter(compartments);
+            var sharedCharacter = StringHelpers.FindSharedCharacters(compartments).Single();
 
             return Alphabet.IndexOf(sharedCharacter) + 1;
         }
 
         public static int GetBackPackPriority(string[] input)
         {
-            var sharedCharacter = FindSharedCharacter(input);
+            var sharedCharacter = StringHelpers.FindSharedCharacters(input).Single();
 
             return Alphabet.IndexOf(sharedCharacter) + 1;
         }
@@ -45,18 +46,6 @@ namespace AdventOfCode2022.Solutions
             var midpoint = input.Length / 2;
 
             return new string[] { input.Substring(0, midpoint), input.Substring(midpoint) };
-        }
-
-        private static char FindSharedCharacter(string[] stringsToCheck)
-        {
-            IEnumerable<char> intersection = stringsToCheck[0];
-
-            for (var i = 1; i < stringsToCheck.Length; i++)
-            {
-                intersection = intersection.Intersect(stringsToCheck[i]);
-            }
-
-            return intersection.Single();
         }
     }
 }
