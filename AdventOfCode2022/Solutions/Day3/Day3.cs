@@ -8,7 +8,7 @@ namespace AdventOfCode2022.Solutions
 {
     public class Day3 : IDay
     {
-        public static char[] Alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+        public static string Alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         public string SolvePart1(IEnumerable<string> input)
         {
@@ -31,14 +31,14 @@ namespace AdventOfCode2022.Solutions
 
             var sharedCharacter = FindSharedCharacter(compartments);
 
-            return Array.IndexOf(Alphabet, sharedCharacter) + 1;
+            return Alphabet.IndexOf(sharedCharacter) + 1;
         }
 
         public static int GetBackPackPriority(string[] input)
         {
             var sharedCharacter = FindSharedCharacter(input);
 
-            return Array.IndexOf(Alphabet, sharedCharacter) + 1;
+            return Alphabet.IndexOf(sharedCharacter) + 1;
         }
 
         private static string[] GetCompartments(string input)
