@@ -17,14 +17,15 @@ namespace AdventOfCode2022.Solutions
 
         public string SolvePart2(IEnumerable<string> input)
         {
-            return input.Select((x, index) => new { Index = index, Value = x })
+            return input
+                .Select((x, index) => new { Index = index, Value = x })
                 .GroupBy(x => x.Index / 3)
                 .Select(x => GetBackPackPriority(x.Select(v => v.Value).ToArray()))
                 .Sum()
                 .ToString();
         }
 
-        public int GetPriorityScore(string input)
+        public static int GetPriorityScore(string input)
         {
             var compartments = GetCompartments(input);
 
@@ -33,7 +34,7 @@ namespace AdventOfCode2022.Solutions
             return Array.IndexOf(Alphabet, sharedCharacter) + 1;
         }
 
-        public int GetBackPackPriority(string[] input)
+        public static int GetBackPackPriority(string[] input)
         {
             var sharedCharacter = FindSharedCharacter(input);
 
