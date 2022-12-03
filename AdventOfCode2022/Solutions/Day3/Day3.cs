@@ -50,19 +50,10 @@ namespace AdventOfCode2022.Solutions
 
         private static char FindSharedCharacter(string[] strings)
         {
-            foreach(var character in Alphabet)
+            foreach(var character in Alphabet) 
             {
-                var containedInAll = true;
 
-                foreach (var stringToCheck in strings)
-                {
-                    if (!stringToCheck.Contains(character, StringComparison.Ordinal))
-                    {
-                        containedInAll = false;
-                    }
-                }
-
-                if (containedInAll)
+                if (strings.All(x => x.Contains(character)))
                 {
                     return character;
                 }
