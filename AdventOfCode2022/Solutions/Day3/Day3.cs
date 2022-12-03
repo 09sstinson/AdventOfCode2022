@@ -50,16 +50,9 @@ namespace AdventOfCode2022.Solutions
 
         private static char FindSharedCharacter(string[] stringsToCheck)
         {
-            foreach(var character in Alphabet) 
-            {
-
-                if (stringsToCheck.All(x => x.Contains(character)))
-                {
-                    return character;
-                }
-            }
-
-            throw new Exception("Couldn't find shared character");
+            return Alphabet
+                .Where(c => stringsToCheck.All(x => x.Contains(c)))
+                .Single();
         }
     }
 }
