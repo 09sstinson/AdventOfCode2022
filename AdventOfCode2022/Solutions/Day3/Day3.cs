@@ -12,15 +12,14 @@ namespace AdventOfCode2022.Solutions
 
         public string SolvePart1(IEnumerable<string> input)
         {
-            return input.Select(x => GetPriorityScore(x)).Sum().ToString();
+            return input.Select(GetPriorityScore).Sum().ToString();
         }
 
         public string SolvePart2(IEnumerable<string> input)
         {
             return input
-                .Select((x, index) => new { Index = index, Value = x })
-                .GroupBy(x => x.Index / 3)
-                .Select(x => GetBackPackPriority(x.Select(v => v.Value).ToArray()))
+                .Chunk(3)
+                .Select(GetBackPackPriority)
                 .Sum()
                 .ToString();
         }
