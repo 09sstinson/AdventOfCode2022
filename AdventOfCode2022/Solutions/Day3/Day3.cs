@@ -27,9 +27,7 @@ namespace AdventOfCode2022.Solutions
 
         public static int GetPriorityScore(string input)
         {
-            var compartments = GetCompartments(input);
-
-            var sharedCharacter = StringHelpers.FindSharedCharacters(compartments).Single();
+            var sharedCharacter = StringHelpers.FindSharedCharacters(GetCompartments(input)).Single();
 
             return Alphabet.IndexOf(sharedCharacter) + 1;
         }
