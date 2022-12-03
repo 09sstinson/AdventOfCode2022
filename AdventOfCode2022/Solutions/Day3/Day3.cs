@@ -48,12 +48,12 @@ namespace AdventOfCode2022.Solutions
             return new string[] { input.Substring(0, midpoint), input.Substring(midpoint) };
         }
 
-        private static char FindSharedCharacter(string[] strings)
+        private static char FindSharedCharacter(string[] stringsToCheck)
         {
             foreach(var character in Alphabet) 
             {
 
-                if (strings.All(x => x.Contains(character)))
+                if (stringsToCheck.All(x => x.Contains(character)))
                 {
                     return character;
                 }
