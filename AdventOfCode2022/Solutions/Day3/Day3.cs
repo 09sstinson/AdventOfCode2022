@@ -49,9 +49,14 @@ namespace AdventOfCode2022.Solutions
 
         private static char FindSharedCharacter(string[] stringsToCheck)
         {
-            return Alphabet
-                .Where(c => stringsToCheck.All(x => x.Contains(c)))
-                .Single();
+            IEnumerable<char> intersection = stringsToCheck[0];
+
+            for (var i = 1; i < stringsToCheck.Length; i++)
+            {
+                intersection = intersection.Intersect(stringsToCheck[i]);
+            }
+
+            return intersection.Single();
         }
     }
 }
