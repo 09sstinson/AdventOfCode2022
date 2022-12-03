@@ -29,7 +29,7 @@ namespace AdventOfCode2022.Solutions
 
             foreach (var inputString in input)
             {
-                if (inputString is null || inputString.Trim() == string.Empty)
+                if (inputString == string.Empty)
                 {
                     calories.Add(tempCalories);
                     tempCalories = 0;
