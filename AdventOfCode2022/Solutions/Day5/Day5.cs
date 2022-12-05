@@ -36,20 +36,21 @@ namespace AdventOfCode2022.Solutions
 
         private static (List<List<char>> crates, IEnumerable<Move> moves) ParseInput(IEnumerable<string> input)
         {
-            return (GetCrates(input.Take(8).ToList()), input.Skip(10).Select(ParseMove));
+            return (ParseCrates(input.Take(8).ToList()), input.Skip(10).Select(ParseMove));
         }
 
         private static void PerformMove(Move move, List<List<char>> crates, bool moveAllAtOnce)
         {
             var cratesMoved = 0;
             var moveCapacity = moveAllAtOnce ? move.NumberOfCrates : 1;
+
             while (cratesMoved < move.NumberOfCrates)
             {
                 var cratesToMove = crates[move.SourceIndex].GetRange(0, moveCapacity);
-
                 crates[move.SourceIndex].RemoveRange(0, moveCapacity);
 
                 crates[move.DestinationIndex].InsertRange(0, cratesToMove);
+
                 cratesMoved += moveCapacity;
             }
         }
@@ -68,30 +69,16 @@ namespace AdventOfCode2022.Solutions
             };
         }
 
-        public static List<List<char>> GetCrates(IEnumerable<string> input)
+        public static List<List<char>> ParseCrates(IEnumerable<string> input)
         {
-            // TODO improve this
-            var crates = input.Select(x => x.Chunk(4).ToList()).ToList();
+            var crates = new List<List<char>>();
 
-            var stacks = new List<List<char>>();    
-
-            for(var i = 0; i < crates[0].Count; i++)
+            for(var i =1; i < input.First().Count(); i += 4)
             {
-                stacks.Add(new List<char>());
+                crates.Add(input.Select(x => x[i]).Where(x => !x.Equals(' ')).ToList());
             }
 
-            for (var i = 0; i < crates.Count(); i++)
-            {
-                for (var j = 0; j < crates[i].Count; j++)
-                {
-                    if (crates[i][j][1] != ' ')
-                    {
-                        stacks[j].Add(crates[i][j][1]);
-                    }
-                }
-            }
-
-            return stacks;
+            return crates;
         }
 
         public record Move
