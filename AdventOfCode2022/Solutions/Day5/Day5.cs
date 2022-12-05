@@ -14,72 +14,91 @@ namespace AdventOfCode2022.Solutions
 
         public string SolvePart1(IEnumerable<string> input)
         {
-            var cratesRaw = input.Take(8).ToList();
-            var movesRaw = input.Skip(10).ToList();
-
-            var crates = PopulateCrates(cratesRaw);
-
-            foreach(var move in movesRaw)
-            {
-                PerformMove(move, crates);
-            }
-
-            return new string(crates.Select(x => x.Last()).ToArray());
-        }
-
-        private static void PerformMove(string input, List<List<char>> crates)
-        {
-            var (numberOfCrates, sourceIndex, destinationIndex) = ParseMove(input);
-
-            for (var i = 0; i < numberOfCrates; i++)
-            {
-                var crateToMove = crates[sourceIndex].Last();
-
-                crates[sourceIndex].RemoveAt(crates[sourceIndex].Count - 1);
-
-                crates[destinationIndex].Add(crateToMove);
-            }
-        }
-
-        private static (int numberOfCrates, int sourceIndex, int destinationIndex) ParseMove(string input)
-        {
-            var moveNumbers = input
-                .Split(
-                new string[] { "move", "from", "to" },
-                StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
-                );
-
-            return new(int.Parse(moveNumbers[0]), int.Parse(moveNumbers[1]) - 1, int.Parse(moveNumbers[2]) - 1);
+            return PerformMoves(input, moveAllAtOnce: false);
         }
 
         public string SolvePart2(IEnumerable<string> input)
         {
-            return "";
+            return PerformMoves(input, moveAllAtOnce: true);
         }
 
-        public List<List<char>> PopulateCrates(IEnumerable<string> input)
+        private string PerformMoves(IEnumerable<string> input, bool moveAllAtOnce)
         {
+            var (crates, moves) = ParseInput(input);
+
+            foreach (var move in moves)
+            {
+                PerformMove(move, crates, moveAllAtOnce);
+            }
+
+            return new string(crates.Select(x => x.First()).ToArray());
+        }
+
+        private static (List<List<char>> crates, IEnumerable<Move> moves) ParseInput(IEnumerable<string> input)
+        {
+            return (GetCrates(input.Take(8).ToList()), input.Skip(10).Select(ParseMove));
+        }
+
+        private static void PerformMove(Move move, List<List<char>> crates, bool moveAllAtOnce)
+        {
+            var cratesMoved = 0;
+            var moveCapacity = moveAllAtOnce ? move.NumberOfCrates : 1;
+            while (cratesMoved < move.NumberOfCrates)
+            {
+                var cratesToMove = crates[move.SourceIndex].GetRange(0, moveCapacity);
+
+                crates[move.SourceIndex].RemoveRange(0, moveCapacity);
+
+                crates[move.DestinationIndex].InsertRange(0, cratesToMove);
+                cratesMoved += moveCapacity;
+            }
+        }
+
+        private static Move ParseMove(string input)
+        {
+            var moveNumbers = input.Split(
+                new string[] { "move", "from", "to" },
+                StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
+                );
+
+            return new Move() { 
+                NumberOfCrates = int.Parse(moveNumbers[0]),
+                SourceIndex = int.Parse(moveNumbers[1]) - 1, 
+                DestinationIndex = int.Parse(moveNumbers[2]) - 1
+            };
+        }
+
+        public static List<List<char>> GetCrates(IEnumerable<string> input)
+        {
+            // TODO improve this
             var crates = input.Select(x => x.Chunk(4).ToList()).ToList();
 
             var stacks = new List<List<char>>();    
 
-            for(var i = 0; i < 9; i++)
+            for(var i = 0; i < crates[0].Count; i++)
             {
                 stacks.Add(new List<char>());
             }
-            
+
             for (var i = 0; i < crates.Count(); i++)
             {
                 for (var j = 0; j < crates[i].Count; j++)
                 {
                     if (crates[i][j][1] != ' ')
                     {
-                        stacks[j] = stacks[j].Prepend(crates[i][j][1]).ToList();
+                        stacks[j].Add(crates[i][j][1]);
                     }
                 }
             }
 
             return stacks;
+        }
+
+        public record Move
+        {
+            public int NumberOfCrates { get; init; }
+            public int SourceIndex { get; init; }
+            public int DestinationIndex { get; init; }
         }
     }
 }
