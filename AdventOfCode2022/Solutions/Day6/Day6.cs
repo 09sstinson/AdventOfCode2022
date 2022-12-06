@@ -11,12 +11,12 @@ namespace AdventOfCode2022.Solutions
     {
         public string SolvePart1(IEnumerable<string> input)
         {
-            return GetPositionOfDistinctValues(input.First(), 4).ToString();
+            return GetPositionOfDistinctValues(input.Single(), 4).ToString();
         }
 
         public string SolvePart2(IEnumerable<string> input)
         {
-            return GetPositionOfDistinctValues(input.First(), 14).ToString();
+            return GetPositionOfDistinctValues(input.Single(), 14).ToString();
         }
 
         private int GetPositionOfDistinctValues(string input, int numberOfDistinctValues)
