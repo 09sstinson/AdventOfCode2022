@@ -36,9 +36,9 @@ namespace AdventOfCode2022.Solutions
         {
             var fileSystem = new FileSystem();
 
-            foreach (var s in input)
+            foreach (var line in input)
             {
-                switch (s)
+                switch (line)
                 {
                     case "$ ls":
                         break;
@@ -49,13 +49,13 @@ namespace AdventOfCode2022.Solutions
                         fileSystem.MoveUpDirectory();
                         break;
                     case string str when str.StartsWith("$ cd"):
-                        fileSystem.MoveDownDirectory(s.Split(" ")[2]);
+                        fileSystem.MoveDownDirectory(line.Split(" ")[2]);
                         break;
                     case string str when str.StartsWith("dir"):
-                        fileSystem.AddChildDirectory(s.Split(" ")[1]);
+                        fileSystem.AddChildDirectory(line.Split(" ")[1]);
                         break;
                     default:
-                        var split = s.Split(" ");
+                        var split = line.Split(" ");
                         fileSystem.AddFile(new File(split[1], int.Parse(split[0])));
                         break;
                 }
