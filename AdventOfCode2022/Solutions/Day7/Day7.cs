@@ -26,9 +26,9 @@ namespace AdventOfCode2022.Solutions
 
             var currentUsed = fileSystem.GetRootSize();
 
-            return fileSystem.Directories
-                .Where(x => currentUsed - x.GetSize() <= 40000000)
-                .Min(x => x.GetSize())
+            return fileSystem.Directories.Select(x => x.GetSize())
+                .Where(x => currentUsed - x <= 40000000)
+                .Min()
                 .ToString();
         }
 
