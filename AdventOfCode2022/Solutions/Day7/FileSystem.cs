@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2022.Solutions
 {
-    internal class FileSystem
+    public class FileSystem
     {
         public List<Directory> Directories { get; set; } = new();
 

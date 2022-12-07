@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2022.Solutions
 {
-    internal class Directory
+    public class Directory
     {
         public Directory(string name, Directory parent) {
             Name = name;
@@ -24,7 +24,7 @@ namespace AdventOfCode2022.Solutions
         }
     }
 
-    internal class File
+    public class File
     {
         public File(string name, int size)
         {
